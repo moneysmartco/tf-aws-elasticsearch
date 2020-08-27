@@ -10,25 +10,6 @@ resource "aws_elasticsearch_domain" "elasticsearch_sg" {
   vpc_options {
     security_group_ids = "[]"
     subnet_ids = "[]"
-    access_policies = <<CONFIG
-    {
-        "Version": "2012-10-17",
-        "Statement": [
-          {
-            "Effect": "Allow",
-            "Principal": {
-              "AWS": [
-                "*"
-              ]
-            },
-            "Action": [
-              "es:*"
-            ],
-            "Resource": "${aws_elasticsearch_domain.elasticsearch_sg.arn}/*"
-          }
-        ]
-      }
-    CONFIG
   }
 
   cluster_config {
@@ -50,4 +31,23 @@ resource "aws_elasticsearch_domain" "elasticsearch_sg" {
   }
 
   tags = "${var.tags}"
+  access_policies = <<POLICIES
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": [
+                "*"
+              ]
+            },
+            "Action": [
+              "es:*"
+            ],
+            "Resource": "${aws_elasticsearch_domain.elasticsearch_sg.arn}/*"
+          }
+        ]
+      }
+    POLICIES
 }
