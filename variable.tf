@@ -1,4 +1,4 @@
-variable "domain_name" {
+variable "es_domain" {
   description = "Domain name for Elasticsearch cluster"
   type        = string
   default     = "msmart-es"
