@@ -1,4 +1,16 @@
-variable "domain_name" {
+variable "vpc_id"{}
+variable "public_subnet_ids" {}
+variable "sg_ids"{}
+variable "security_group_tags"{
+  description = "Tags for Domain Security group"
+  type = map(string)
+  default = {
+      Team = "Discovery"
+      Environment = "Staging"
+   }
+}
+
+variable "es_domain" {
   description = "Domain name for Elasticsearch cluster"
   type        = string
   default     = "msmart-es"
@@ -44,9 +56,15 @@ variable "es_snapshot_hour"{
   default     = "0"
 }
 variable "tags"{
+  description = "Tags for ES domain"
   type = map(string)
   default = {
       Team = "Discovery"
       Environment = "Staging"
    }
+}
+variable "account_id"{
+  description = "List of account id that need access to ES domain"
+  #type = list
+  default = "814507470717" #production-id
 }
