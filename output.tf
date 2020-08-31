@@ -4,13 +4,13 @@ output "domain_name" {
 }
 output "domain_arn"{
   description = " Amazon Resource Name (ARN) of the domain."
-  value = "${aws_elasticsearch_domain.es_domain.arn}"
+  value = "${aws_elasticsearch_domain.elasticsearch_sg.arn}"
 }
 output "es_endpoint"{
   description = "Domain-specific endpoint used to submit index, search, and data upload requests."
-  value = "${aws_elasticsearch_domain.es_domain.endpoint}"
+  value = "${aws_elasticsearch_domain.elasticsearch_sg.endpoint}"
 }
 output "kibana_endpoint"{
   description = "Domain-specific endpoint for kibana without https scheme."
-  value = "${aws_elasticsearch_domain.es_domain.kibana_endpoint}"
+  value = "${aws_elasticsearch_domain.elasticsearch_sg.kibana_endpoint}"
 }
