@@ -12,7 +12,7 @@ resource "aws_security_group" "es-security-group" {
     from_port       = 80
     to_port         = 80
     protocol        = "http"
-    security_groups = ["split(",",var.sg_ids)"]
+    security_groups = ["split(",",var.app_sg_ids)"]
     self            = true
   }
 
@@ -52,7 +52,7 @@ resource "aws_elasticsearch_domain_policy" "main" {
 resource "aws_elasticsearch_domain" "elasticsearch_sg" {
   domain_name           = "${var.es_domain}"
   elasticsearch_version = "${var.es_version}"
-  depends_on = [aws_iam_service_linked_role.es]
+  depends_on = ["aws_iam_service_linked_role.es"]
 
   vpc_options {
     security_group_ids = ["${aws_security_group.es_security_group.id}"]
