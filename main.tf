@@ -23,6 +23,10 @@ resource "aws_security_group" "es_security_group" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = "${var.security_group_tags}"
+  
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_elasticsearch_domain_policy" "main" {
