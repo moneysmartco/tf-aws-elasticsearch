@@ -11,7 +11,7 @@ resource "aws_security_group" "es_security_group" {
   ingress {
     from_port       = 80
     to_port         = 80
-    protocol        = "http"
+    protocol        = "tcp"
     security_groups = ["split(",",var.app_sg_ids)"]
     self            = true
   }
