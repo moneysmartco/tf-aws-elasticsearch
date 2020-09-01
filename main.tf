@@ -2,7 +2,7 @@ resource "aws_iam_service_linked_role" "es" {
   aws_service_name = "es.amazonaws.com"
 }
 
-resource "aws_security_group" "es-security-group" {
+resource "aws_security_group" "es_security_group" {
   name        = "${var.es_domain}-sg"
   description = "Security group for elasticsearch"
 
