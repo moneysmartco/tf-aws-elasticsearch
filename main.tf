@@ -12,7 +12,7 @@ resource "aws_security_group" "es_security_group" {
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
-    security_groups = ["split(",",var.app_sg_ids)"]
+    security_groups = ["split(",","${var.app_sg_ids}")"]
     self            = true
   }
 
