@@ -68,3 +68,6 @@ variable "account_id"{
   #type = list
   default = "814507470717" #production-id
 }
+variable "cidr_blocks"{
+  description = "list of cidrs to be whitelisted in securiy group"
+}

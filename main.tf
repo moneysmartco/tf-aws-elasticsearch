@@ -7,6 +7,14 @@ resource "aws_security_group" "es_security_group" {
   description = "Security group for elasticsearch"
 
   vpc_id = "${var.vpc_id}"
+  
+   ingress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    security_groups = ["${var.cidr_blocks}"]
+    self            = true
+  }
 
   ingress {
     from_port       = 80
