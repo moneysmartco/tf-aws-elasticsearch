@@ -13,7 +13,6 @@ resource "aws_security_group" "es_security_group" {
     to_port         = 0
     protocol        = "-1"
     cidr_blocks     = ["192.168.0.0/16"]
-    self            = true
   }
 
   ingress {
