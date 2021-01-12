@@ -6,20 +6,20 @@ resource "aws_security_group" "es_security_group" {
   name        = "${var.es_domain}-sg"
   description = "Security group for elasticsearch"
 
-  vpc_id = "${var.vpc_id}"
-  
-   ingress {
-    from_port       = 0
-    to_port         = 0
-    protocol        = "-1"
-    cidr_blocks     = ["192.168.0.0/16"]
+  vpc_id = var.vpc_id
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["192.168.0.0/16"]
   }
 
   ingress {
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
-    security_groups = ["${split(",", var.app_sg_ids)}"]
+    security_groups = split(",", var.app_sg_ids)
     self            = true
   }
 
@@ -29,15 +29,15 @@ resource "aws_security_group" "es_security_group" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  tags = "${var.security_group_tags}"
-  
+  tags = var.security_group_tags
+
   lifecycle {
     create_before_destroy = true
   }
 }
 
 resource "aws_elasticsearch_domain_policy" "main" {
-  domain_name = "${aws_elasticsearch_domain.elasticsearch_sg.domain_name}"
+  domain_name     = aws_elasticsearch_domain.elasticsearch_sg.domain_name
   access_policies = <<POLICIES
   {
       "Version": "2012-10-17",
@@ -56,37 +56,39 @@ resource "aws_elasticsearch_domain_policy" "main" {
           }
         ]
       }
-  POLICIES
+  
+POLICIES
+
 }
 
-
 resource "aws_elasticsearch_domain" "elasticsearch_sg" {
-  domain_name           = "${var.es_domain}"
-  elasticsearch_version = "${var.es_version}"
-  depends_on = ["aws_iam_service_linked_role.es"]
+  domain_name           = var.es_domain
+  elasticsearch_version = var.es_version
+  depends_on            = [aws_iam_service_linked_role.es]
 
   vpc_options {
-    security_group_ids = ["${aws_security_group.es_security_group.id}"]
-    subnet_ids = ["${var.public_subnet_ids}"]
+    security_group_ids = [aws_security_group.es_security_group.id]
+    subnet_ids         = [var.public_subnet_ids]
   }
 
   cluster_config {
-    instance_type = "${var.es_instance_type}"
-    instance_count = "${var.es_instance_count}"
+    instance_type  = var.es_instance_type
+    instance_count = var.es_instance_count
     #dedicated_master_enabled = "${var.es_dedicated_master_count > 0 ? true : false}"
     #dedicated_master_count = "${var.es_dedicated_master_count}"
     #dedicated_master_type = "${var.es_dedicated_master_type}"
   }
 
   ebs_options {
-    ebs_enabled = "${var.ebs_volume_size > 0 ? true : false}"
-    volume_size = "${var.ebs_volume_size}"
-    volume_type = "${var.ebs_volume_type}"
+    ebs_enabled = var.ebs_volume_size > 0 ? true : false
+    volume_size = var.ebs_volume_size
+    volume_type = var.ebs_volume_type
   }
 
   /*snapshot_options {
     automated_snapshot_start_hour = "${var.es_snapshot_hour}"
   }*/
 
-  tags = "${var.tags}"
+  tags = var.tags
 }
+
