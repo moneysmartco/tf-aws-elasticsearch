@@ -78,6 +78,11 @@ resource "aws_elasticsearch_domain" "elasticsearch_sg" {
     #dedicated_master_count = "${var.es_dedicated_master_count}"
     #dedicated_master_type = "${var.es_dedicated_master_type}"
   }
+  
+  encrypt_at_rest{
+    enabled = var.es_encryption_enabled
+  }
+
 
   ebs_options {
     ebs_enabled = var.ebs_volume_size > 0 ? true : false
