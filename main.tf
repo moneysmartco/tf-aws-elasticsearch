@@ -80,7 +80,7 @@ resource "aws_elasticsearch_domain" "elasticsearch_sg" {
   }
   
   encrypt_at_rest{
-    enabled = false
+    enabled = var.es_encryption_enabled
   }
 
 
