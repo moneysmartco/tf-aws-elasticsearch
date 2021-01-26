@@ -97,7 +97,7 @@ variable "account_id" {
   default = "814507470717" #production-id
 }
 variable "es_encryption_enabled" {
-  default = false
+  default = true
   
 }
 
