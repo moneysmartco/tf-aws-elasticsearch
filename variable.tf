@@ -96,5 +96,8 @@ variable "account_id" {
   #type = list
   default = "814507470717" #production-id
 }
-variable "es_encryption_enabled"{}
+variable "es_encryption_enabled" {
+  default = true
+  
+}
 
